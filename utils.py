@@ -180,7 +180,7 @@ def initialization(experiment, data_path, data_name, k, train_size, learning_rat
     dim_in = X.shape[1]
     dim_h = 100
     dim_out = 20
-    graphsage = GraphSAGE(dim_in, dim_h, dim_out, status, stage)
+    graphsage = GraphSAGE(dim_in, dim_h, status, stage)
 
     num_inducing = int(0.95 * 0.6 * X.shape[0])
     model = GraphDKL(graphsage, num_inducing, dim_out, status)
