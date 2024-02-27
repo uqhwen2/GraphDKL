@@ -67,7 +67,7 @@ class GraphDKL(gpytorch.Module):  # Need to be changed to gpytorch.Module if GP 
         self.gp_0 = GPR_0(num_inducing, latent_dim)
 
         # Neural Net Decoder
-        #implement the spectral normalization, comment out the first two and uncomment the last two to swithc to no SN
+        # Implement the spectral normalization, comment out the first two and uncomment the last two to switch to no SN
         self.fc_y1_pred = nn.Sequential(
                                         spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
                                         spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
