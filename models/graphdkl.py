@@ -12,13 +12,17 @@ from gpytorch.variational import VariationalStrategy
 class GraphSAGE(nn.Module):
     """GraphSAGE"""
 
-    def __init__(self, dim_in, dim_h, dim_out):
+    def __init__(self, dim_in, dim_h, status):
         super().__init__()
         # SN_SAGEConv implement the spectral normalization (SN), while SAEGConv is the one without SN.
         # Swith to SAGEConv if you do not want SN
-        self.sage1 = SN_SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
-        self.sage2 = SN_SAGEConv(dim_h, dim_h, aggr='max', normalize=True)  # Pay attention to the dim_out when connecting to GP
-
+        if status == 'WithSN':
+            self.sage1 = SN_SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
+            self.sage2 = SN_SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
+        else:
+            self.sage1 = SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
+            self.sage2 = SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
+            
     def forward(self, x, edge_index):
         h = F.relu(self.sage1(x, edge_index))
         h = F.dropout(h, 0.1, training=self.training)
@@ -59,7 +63,7 @@ class GPR_0(ApproximateGP):
 
 
 class GraphDKL(gpytorch.Module):  # Need to be changed to gpytorch.Module if GP is used, otherwise nn.Module
-    def __init__(self, feature_extractor, num_inducing, latent_dim):
+    def __init__(self, feature_extractor, num_inducing, latent_dim, status):
         super(GraphDKL, self).__init__()
         self.gnn = feature_extractor  # This GNN model for feature extraction has been initialized outside
 
@@ -67,20 +71,27 @@ class GraphDKL(gpytorch.Module):  # Need to be changed to gpytorch.Module if GP 
         self.gp_0 = GPR_0(num_inducing, latent_dim)
 
         # Neural Net Decoder
-        # Implement the spectral normalization, comment out the first two and uncomment the last two to switch to no SN
-        self.fc_y1_pred = nn.Sequential(
-                                        spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
-                                        spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
-#                                        nn.Linear(100,100), nn.ReLU(),
-#                                        nn.Linear(100, latent_dim), nn.ReLU(),
-                                        )
-
-        self.fc_y0_pred = nn.Sequential(
-                                        spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
-                                        spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
-#                                        nn.Linear(100,100), nn.ReLU(),
-#                                        nn.Linear(100, latent_dim), nn.ReLU(),
-                                        )
+        if status == 'WithSN':
+            self.fc_y1_pred = nn.Sequential(
+                                            spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
+                                            spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
+                                            )
+    
+            self.fc_y0_pred = nn.Sequential(
+                                            spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
+                                            spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
+                                            )
+            
+        elif status == 'WithOSN':
+            self.fc_y1_pred = nn.Sequential(
+                                            nn.Linear(100,100), nn.ReLU(),
+                                            nn.Linear(100, latent_dim), nn.ReLU(),
+                                            )
+    
+            self.fc_y0_pred = nn.Sequential(
+                                            nn.Linear(100,100), nn.ReLU(),
+                                            nn.Linear(100, latent_dim), nn.ReLU(),
+                                            )
 
     def forward(self, x, edge_index, t):
         latent = self.gnn(x, edge_index)  # latent representation learning
