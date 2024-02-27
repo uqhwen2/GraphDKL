@@ -1,4 +1,4 @@
-# To Preject or to Reject: Causal Effect Estimation with Uncertainty on Networked Data
+# GraphDKL
 
 This is a repo hosting the source code of our proposed method GraphDKL for causal effect estimation on graph data. If you find our code helpful, citing our paper is appreciated. 
 
