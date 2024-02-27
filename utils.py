@@ -151,7 +151,6 @@ def initialization(experiment, data_path, data_name, k, train_size, learning_rat
     n = X.shape[0]
     n_train = int(n * (train_size + 0.2))
     n_test = int(n * 0.2)
-    # n_valid = n_test
 
     idx = np.random.permutation(n)
     idx_train, idx_test = idx[:n_train], idx[n_train:]
