@@ -22,7 +22,7 @@ $ conda env create -f environment.yml
 
 ## Example
 
-Training on the BlogCatalog dataset with imbalance k=0.5 
+Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enable.
 
 ### 
 ```.sh
