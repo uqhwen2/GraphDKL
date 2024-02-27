@@ -114,10 +114,10 @@ if __name__ == '__main__':
 
     pehes, maes, pruned_pehes, error_props = [], [], [], []
 
-    for experiment in range(0, 10): # simulation 0 is different from the rest, causing some nan problem when estimating.
+    for experiment in range(0, 10): # simulation 0 is different from the rest, can cause some nan problem when estimating.
 
         # Train model
-        (X, A, T, Y1, Y0, _, _, _, idx_test,
+        (X, A, T, Y1, Y0, idx_train, _, _, idx_test,
          model, _, _, _) = utils.initialization(experiment=experiment,
                                                 data_path=args.path,
                                                 data_name=args.dataset,
