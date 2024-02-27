@@ -12,16 +12,20 @@ from gpytorch.variational import VariationalStrategy
 class GraphSAGE(nn.Module):
     """GraphSAGE"""
 
-    def __init__(self, dim_in, dim_h, status):
+    def __init__(self, dim_in, dim_h, status, stage):
         super().__init__()
-        # SN_SAGEConv implement the spectral normalization (SN), while SAEGConv is the one without SN.
-        # Swith to SAGEConv if you do not want SN
-        if status == 'WithSN':
-            self.sage1 = SN_SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
-            self.sage2 = SN_SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
-        else:
-            self.sage1 = SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
-            self.sage2 = SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
+        
+        if stage == 'train':
+            if status == 'WithSN':
+                self.sage1 = SN_SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
+                self.sage2 = SN_SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
+            else:
+                self.sage1 = SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
+                self.sage2 = SAGEConv(dim_h, dim_h, aggr='max', normalize=True) 
+                
+        elif stage == 'eval':
+                self.sage1 = SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
+                self.sage2 = SAGEConv(dim_h, dim_h, aggr='max', normalize=True)  
             
     def forward(self, x, edge_index):
         h = F.relu(self.sage1(x, edge_index))
