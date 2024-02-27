@@ -109,7 +109,7 @@ def prepare(i_exp):
     dim_out = 20
     graphsage = GraphSAGE(dim_in, dim_h, dim_out)
 
-    num_inducing = int(0.4 * 0.8 * X.shape[0])    # Align to 0.95 * 0.6 (27th June) from 0.4 * 0.8
+    num_inducing = int(0.95 * 0.6 * X.shape[0])    # Align to 0.95 * 0.6 (27th June) from 0.4 * 0.8
     model = GraphDKL(graphsage, num_inducing, dim_out)
 
     likelihood_1 = gpytorch.likelihoods.GaussianLikelihood()
