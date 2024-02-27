@@ -62,8 +62,8 @@ loss = torch.nn.MSELoss()
 def evaluation(X, A, T, Y1, Y0, idx_train, idx_test):
     model.eval()
 
-    pred_1, pred_0, rep = model(X, A, T, args.mode)
-    pred_1_cf, pred_0_cf, _ = model(X, A, 1 - T, args.mode)
+    pred_1, pred_0, rep = model(X, A, T)
+    pred_1_cf, pred_0_cf, _ = model(X, A, 1 - T)
 
     yf_pred = torch.where(T > 0, pred_1.mean, pred_0.mean)
     ycf_pred = torch.where(1-T > 0, pred_1_cf.mean, pred_0_cf.mean)
