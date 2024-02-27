@@ -14,7 +14,7 @@ IEEE ICDM'23 [To Predict or to Reject: Causal Effect Estimation with Uncertainty
 }
 ```
 
-## Package
+## Installation
 
 ```.sh
 $ conda env create -f environment.yml
