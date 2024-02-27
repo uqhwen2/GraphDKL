@@ -2,23 +2,18 @@
 import time
 import argparse
 import numpy as np
-
 import torch
-# import torch.nn.functional as F
+from torch.optim.lr_scheduler import MultiStepLR
 import torch.optim as optim
-
-from models.graphdkl import GCN_DECONF, GraphSAGE, GraphDKL
+from models.graphdkl import GraphSAGE, GraphDKL
 import utils
-
-# from scipy import sparse as sp
 import csv
-
 import networkx as nx
 from torch_geometric.utils.convert import from_networkx
 import gpytorch
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-from torch.optim.lr_scheduler import MultiStepLR
+
 
 # Training settings
 parser = argparse.ArgumentParser()
