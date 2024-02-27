@@ -143,7 +143,10 @@ def trt_ctr(treatment):
     return list1, list0
 
 
-def initialization(experiment, data_path, data_name, k, train_size, learning_rate, weight_decay):
+def initialization(experiment, data_path, data_name, k, train_size, learning_rate, weight_decay, seed):
+    
+    np.random.seed(seed)
+    torch.manual_seed(seed)
     # Load data and init models
     # X, A, T, Y1, Y0 = utils.load_data(args.path, name=args.dataset, original_X=False, exp_id=str(experiment), extra_str=args.extrastr)
     X, A, T, Y1, Y0 = load_data(data_path, name=data_name, original_X=False, exp_id=str(experiment), extra_str=k)
