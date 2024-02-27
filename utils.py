@@ -143,7 +143,7 @@ def trt_ctr(treatment):
     return list1, list0
 
 
-def initialization(experiment, data_path, data_name, k, train_size, learning_rate, weight_decay, seed):
+def initialization(experiment, data_path, data_name, k, train_size, learning_rate, weight_decay, seed, status):
     
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -180,10 +180,10 @@ def initialization(experiment, data_path, data_name, k, train_size, learning_rat
     dim_in = X.shape[1]
     dim_h = 100
     dim_out = 20
-    graphsage = GraphSAGE(dim_in, dim_h, dim_out)
+    graphsage = GraphSAGE(dim_in, dim_h, dim_out, status)
 
     num_inducing = int(0.95 * 0.6 * X.shape[0])
-    model = GraphDKL(graphsage, num_inducing, dim_out)
+    model = GraphDKL(graphsage, num_inducing, dim_out, status)
 
     likelihood_1 = gpytorch.likelihoods.GaussianLikelihood()
     likelihood_0 = gpytorch.likelihoods.GaussianLikelihood()
