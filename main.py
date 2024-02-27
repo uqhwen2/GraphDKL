@@ -38,6 +38,8 @@ parser.add_argument('--gamma', type=float, default=0.1)
 
 parser.add_argument('--mode', type=str, default='WithOSN')
 
+parser.add_argument('--stage', type=str, default='train')
+
 args = parser.parse_args()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 np.random.seed(args.seed)
@@ -139,7 +141,8 @@ if __name__ == '__main__':
                                                                               learning_rate=args.lr,
                                                                               weight_decay=args.weight_decay,
                                                                               seed=args.seed,
-                                                                              status=args.mode)
+                                                                              status=args.mode,
+                                                                              stage=args.stage)
 
         t_total = time.time()
 
