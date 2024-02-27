@@ -186,6 +186,4 @@ if __name__ == '__main__':
 
         torch.save({'model': state_dict, 'likelihood_1': likelihood_1_state_dict, 'likelihood_0': likelihood_0_state_dict},
                     'trained_models/inductive/{}/GraphDKL_{}{}_{}.dat'.format(args.mode, args.dataset, args.extrastr, experiment))
-
-    with open('text_results/{}/{}{}.txt'.format(args.mode, args.dataset, args.extrastr), 'w') as f:
-        print('mean PEHE: ', sum(pehes)/len(pehes), 'mean MAE: ', sum(maes)/len(maes), file=f)
+        
