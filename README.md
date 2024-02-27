@@ -16,7 +16,8 @@ IEEE ICDM'23 [To Predict or to Reject: Causal Effect Estimation with Uncertainty
 
 ## Installation
 
-The following .yml is a direct output from the acutal environment. I retested the installation without any problem on the Ubuntu 22.04 LTS with 12th Gen Intel® Core™ i7-12700K and RTX3090 
+The following .yml is a direct output from the actual working environment by "conda env export > environment.yml
+". I retested the installation without any problem on the Ubuntu 22.04 LTS with 12th Gen Intel® Core™ i7-12700K and RTX3090. If there is any issue regarding install the environment, please raise a question via Issues
 ```.sh
 $ conda env create -f environment.yml
 ```
