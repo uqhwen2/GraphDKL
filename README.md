@@ -26,7 +26,7 @@ $ conda env create -f environment.yml
 Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enable.
 
 ```.sh
-bash main.sh
+bash main_blogcatalog.sh
 ```
 
 ### Create result holder
@@ -40,5 +40,5 @@ python write_csv.py
 Conduct rejection and save the estimation error for the rest at different rejection rate.
 
 ```.sh
-bash evaluations.sh
+bash evaluations_blogcatalog.sh
 ```
