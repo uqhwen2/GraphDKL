@@ -12,3 +12,9 @@ IEEE ICDM'23 [To Predict or to Reject: Causal Effect Estimation with Uncertainty
   year={2023},
   organization={IEEE}
 }
+
+## Package
+
+```.sh
+$ conda env create -f environment.yml
+```
