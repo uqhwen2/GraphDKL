@@ -59,11 +59,11 @@ torch.manual_seed(args.seed)
 
 loss = torch.nn.MSELoss()
 
-def eva(X, A, T, Y1, Y0, idx_train, idx_test):
+def evaluation(X, A, T, Y1, Y0, idx_train, idx_test):
     model.eval()
 
-    pred_1, pred_0, rep = model(X, A, T)
-    pred_1_cf, pred_0_cf, _ = model(X, A, 1 - T)
+    pred_1, pred_0, rep = model(X, A, T, args.mode)
+    pred_1_cf, pred_0_cf, _ = model(X, A, 1 - T, args.mode)
 
     yf_pred = torch.where(T > 0, pred_1.mean, pred_0.mean)
     ycf_pred = torch.where(1-T > 0, pred_1_cf.mean, pred_0_cf.mean)
@@ -153,7 +153,7 @@ if __name__ == '__main__':
         model.load_state_dict(model_state_dict)
 
         # Testing
-        pehe, mae, pruned_pehe, error_prop = eva(X, A, T, Y1, Y0, idx_train, idx_test)
+        pehe, mae, pruned_pehe, error_prop = evaluation(X, A, T, Y1, Y0, idx_train, idx_test)
         pehes.append(pehe)
         maes.append(mae)
         pruned_pehes.append(pruned_pehe)
