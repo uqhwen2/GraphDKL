@@ -77,13 +77,10 @@ def prepare(i_exp):
     n = X.shape[0]
     n_train = int(n * (args.tr + 0.2))
     n_test = int(n * 0.2)
-    # n_valid = n_test
+
 
     idx = np.random.permutation(n)
-#    idx_train, idx_test, idx_val = idx[:n_train], idx[n_train:n_train+n_test], idx[n_train+n_test:]
     idx_train, idx_test, idx_val = idx[:n_train], idx[n_train:], 1
-
-    #X = utils.normalize(X) #row-normalize
 
     X = X.todense()
     X = Tensor(X)
@@ -94,10 +91,6 @@ def prepare(i_exp):
     Y1 = Tensor(np.squeeze(Y1))
     Y0 = Tensor(np.squeeze(Y0))
     T = LongTensor(np.squeeze(T))
-
-    #A = utils.sparse_mx_to_torch_sparse_tensor(A,cuda=1)
-
-    # print(X.shape, Y1.shape, A.shape)
 
     idx_train = LongTensor(idx_train)
     idx_val = LongTensor(idx_val)
@@ -114,11 +107,6 @@ def prepare(i_exp):
 
     likelihood_1 = gpytorch.likelihoods.GaussianLikelihood()
     likelihood_0 = gpytorch.likelihoods.GaussianLikelihood()
-
-    # Model and optimizer
-    #model = GCN_DECONF(nfeat=X.shape[1],
-    #            nhid=args.hidden,
-    #            dropout=args.dropout,n_out=args.nout,n_in=args.nin)
 
     optimizer = optim.Adam([{'params': model.gnn.parameters()},
                             {'params': model.fc_y1_pred.parameters()},
