@@ -26,7 +26,7 @@ $ conda activate graphdkl
 ## Example
 
 ### Training
-Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enabled. Save the trained model to the local dir.
+Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalization enabled, and then save the trained model to the local dir.
 
 ```.sh
 $ bash main_blogcatalog.sh
@@ -40,7 +40,7 @@ $ python write_csv.py
 ```
 
 ### Evaluation
-Reload the trained model from the local dir, conduct rejections and save the estimation error for the rest at different rejection rate.
+Reload the trained model from the local dir, conduct rejections and save the estimation error for the rest at a serial rejection rate.
 
 ```.sh
 $ bash evaluations_blogcatalog.sh
