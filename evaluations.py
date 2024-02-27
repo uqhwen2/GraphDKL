@@ -46,6 +46,8 @@ parser.add_argument('--threshold', type=float, default=0.95)
 
 parser.add_argument('--mode', type=str, default='WithOSN')
 
+parser.add_argument('--stage', type=str, default='eval')
+
 parser.add_argument('--count', type=int, default=1)
 
 args = parser.parse_args()
@@ -126,7 +128,8 @@ if __name__ == '__main__':
                                                 learning_rate=args.lr,
                                                 weight_decay=args.weight_decay,
                                                 seed=args.seed,
-                                                status=args.mode)
+                                                status=args.mode,
+                                                stage=args.stage)
         
         t_total = time.time()
        
