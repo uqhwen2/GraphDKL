@@ -1,6 +1,6 @@
 # GraphDKL
 
-This is a repo hosting the source code of our proposed method GraphDKL for causal effect estimation and risk detection on graph data. If you find our code helpful, citing our paper is appreciated. 
+This repo contains the source code of our proposed method GraphDKL for causal effect estimation and risk detection on graph data. If you find our code helpful, citing our paper is appreciated. 
 
 IEEE ICDM'23 [To Predict or to Reject: Causal Effect Estimation with Uncertainty on Networked Data](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10415750).
 ```bibtex
