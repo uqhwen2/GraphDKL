@@ -1,0 +1,9 @@
+name: GraphDKL
+channels:
+  - pytorch
+  - gpytorch
+  - defaults
+dependencies:
+  - python==3.9.16
+  - pytorch=1.13.1
+  - gpytorch==1.9.1
