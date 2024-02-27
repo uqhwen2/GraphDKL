@@ -20,6 +20,7 @@ The following .yml is a direct output from the actual working environment by "co
 ". I retested the installation without any problem on the Ubuntu 22.04 LTS with 12th Gen Intel® Core™ i7-12700K and RTX3090. If there is any issue regarding the installation, please raise a question via Issues
 ```.sh
 $ conda env create -f environment.yml
+$ conda activate graphdkl
 ```
 
 ## Example
@@ -28,19 +29,19 @@ $ conda env create -f environment.yml
 Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enabled. Save the trained model to the local dir.
 
 ```.sh
-bash main_blogcatalog.sh
+$ bash main_blogcatalog.sh
 ```
 
 ### Create result holder
 
 Create the .csv file to hold the results from BlogCatalog with k=0.5
 ```.sh
-python write_csv.py
+$ python write_csv.py
 ```
 
 ### Evaluation
 Reload the trained model from the local dir, conduct rejections and save the estimation error for the rest at different rejection rate.
 
 ```.sh
-bash evaluations_blogcatalog.sh
+$ bash evaluations_blogcatalog.sh
 ```
