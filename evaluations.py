@@ -75,7 +75,7 @@ def prepare(i_exp):
     X, A, T, Y1, Y0 = utils.load_data(args.path, name=args.dataset, original_X=False, exp_id=str(i_exp), extra_str=args.extrastr)
 
     n = X.shape[0]
-    n_train = int(n * args.tr + 0.2)
+    n_train = int(n * (args.tr + 0.2))
     n_test = int(n * 0.2)
     # n_valid = n_test
 
