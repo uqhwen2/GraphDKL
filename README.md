@@ -1,9 +1,10 @@
 # To Preject or to Reject: Causal Effect Estimation with Uncertainty on Networked Data
 
-This is a repo hosting the source code for GraphDKL for causal effect estimation on graph data.
-The full code will be uploaded with clear structure and testing instruction after the ICDM conference in Shanghai, 1-4 Dec 2023. Sorry I'm busy with my new project atm :).
-
-DM me to my uni email if you urgently need it for testing and citation purpose before the ICDM conference, I'll send you the rough code for testing (a bit messy hhhh but works).
-
-#UPDATE 27th Feb 2024
-Hey guys, I'm updating this repo, due to my heavy workload from current paper deadline, I am expected to finish updating the repo by this weekend.
+This is a repo hosting the source code for GraphDKL for causal effect estimation on graph data. If you find our code helpful, citing our paper is appreciated. @inproceedings{wen2023predict,
+  title={To Predict or to Reject: Causal Effect Estimation with Uncertainty on Networked Data},
+  author={Wen, Hechuan and Chen, Tong and Chai, Li Kheng and Sadiq, Shazia and Zheng, Kai and Yin, Hongzhi},
+  booktitle={2023 IEEE International Conference on Data Mining (ICDM)},
+  pages={1415--1420},
+  year={2023},
+  organization={IEEE}
+}
