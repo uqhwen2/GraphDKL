@@ -41,7 +41,7 @@ Create the .csv file to hold the results from BlogCatalog with k=0.5
 $ python write_csv.py
 ```
 
-### Evaluation
+### Evaluation of the Rejection Performance
 Reload the trained model from the local dir, conduct rejections and save the estimation error for the rest at a serial rejection rate.
 
 ```.sh
