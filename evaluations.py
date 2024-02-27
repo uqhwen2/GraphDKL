@@ -68,56 +68,6 @@ torch.manual_seed(args.seed)
 
 loss = torch.nn.MSELoss()
 
-
-def prepare(i_exp):
-
-    # Load data and init models
-    X, A, T, Y1, Y0 = utils.load_data(args.path, name=args.dataset, original_X=False, exp_id=str(i_exp), extra_str=args.extrastr)
-
-    n = X.shape[0]
-    n_train = int(n * (args.tr + 0.2))
-    n_test = int(n * 0.2)
-
-
-    idx = np.random.permutation(n)
-    idx_train, idx_test, idx_val = idx[:n_train], idx[n_train:], 1
-
-    X = X.todense()
-    X = Tensor(X)
-
-    X = scaler.fit_transform(X) # Do standardization instead of the default row_norm
-    X = Tensor(X) # Transfer back to tensor to get aligned
-
-    Y1 = Tensor(np.squeeze(Y1))
-    Y0 = Tensor(np.squeeze(Y0))
-    T = LongTensor(np.squeeze(T))
-
-    idx_train = LongTensor(idx_train)
-    idx_val = LongTensor(idx_val)
-    idx_test = LongTensor(idx_test)
-
-    # Create GraphSAGE instance
-    dim_in = X.shape[1]
-    dim_h = 100
-    dim_out = 20
-    graphsage = GraphSAGE(dim_in, dim_h, dim_out)
-
-    num_inducing = int(0.95 * 0.6 * X.shape[0])    # Align to 0.95 * 0.6 (27th June) from 0.4 * 0.8
-    model = GraphDKL(graphsage, num_inducing, dim_out)
-
-    likelihood_1 = gpytorch.likelihoods.GaussianLikelihood()
-    likelihood_0 = gpytorch.likelihoods.GaussianLikelihood()
-
-    optimizer = optim.Adam([{'params': model.gnn.parameters()},
-                            {'params': model.fc_y1_pred.parameters()},
-                            {'params': model.gp_1.hyperparameters(), 'lr': args.lr * 0.5}, {'params': model.gp_1.variational_parameters()},
-                            {'params': model.gp_0.hyperparameters(), 'lr': args.lr * 0.5}, {'params': model.gp_0.variational_parameters()},
-                            {'params': likelihood_1.parameters()},
-                            {'params': likelihood_0.parameters()}], lr=args.lr, weight_decay=args.weight_decay)
-
-    return X.to(device), A, T.to(device), Y1.to(device), Y0.to(device), idx_train, idx_val, idx_test, model.to(device), optimizer, likelihood_1.to(device), likelihood_0.to(device)
-
-
 def eva(X, A, T, Y1, Y0, idx_train, idx_test):
     model.eval()
 
@@ -175,10 +125,18 @@ if __name__ == '__main__':
 
     pehes, maes, pruned_pehes, error_props = [], [], [], []
 
-    for i_exp in range(0, 10): # simulation 0 is different from the rest, causing some nan problem when estimating.
+    for experiment in range(0, 10): # simulation 0 is different from the rest, causing some nan problem when estimating.
 
         # Train model
-        X, A, T, Y1, Y0, idx_train, idx_val, idx_test, model, _, _, _ = prepare(i_exp)
+        (X, A, T, Y1, Y0, _, _, _, idx_test,
+         model, _, _, _) = utils.initialization(experiment=experiment,
+                                                data_path=args.path,
+                                                data_name=args.dataset,
+                                                k=args.extrastr,
+                                                train_size=args.tr,
+                                                learning_rate=args.lr,
+                                                weight_decay=args.weight_decay)
+        
         t_total = time.time()
        
         A_matrix = A.tocoo() 
@@ -187,7 +145,7 @@ if __name__ == '__main__':
         A = edge_index.long()
 
         # Define the path to the saved model
-        PATH = "trained_models/inductive/{}/GraphDKL_{}{}_{}.dat".format(args.mode, args.dataset, args.extrastr, i_exp)
+        PATH = "trained_models/inductive/{}/GraphDKL_{}{}_{}.dat".format(args.mode, args.dataset, args.extrastr, experiment)
 
         # Load the saved model
         checkpoint = torch.load(PATH)
