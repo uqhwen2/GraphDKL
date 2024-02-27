@@ -22,9 +22,16 @@ $ conda env create -f environment.yml
 
 ## Example
 
+### Training
 Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enable.
 
-### 
 ```.sh
 main.sh
+```
+
+### Evaluation
+Conduct rejection and save the estimation error for the rest at different rejection rate.
+
+```.sh
+evaluations.sh
 ```
