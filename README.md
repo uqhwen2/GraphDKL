@@ -23,7 +23,7 @@ $ conda env create -f environment.yml
 ## Example
 
 ### Training
-Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enable.
+Training on the BlogCatalog dataset with imbalance k=0.5 with spectral normalizaton enabled. Save the trained model to the local dir.
 
 ```.sh
 bash main_blogcatalog.sh
