@@ -138,7 +138,8 @@ if __name__ == '__main__':
                                                                               train_size=args.tr,
                                                                               learning_rate=args.lr,
                                                                               weight_decay=args.weight_decay,
-                                                                              seed=args.seed)
+                                                                              seed=args.seed,
+                                                                              status=args.mode)
 
         t_total = time.time()
 
