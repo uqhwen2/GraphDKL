@@ -37,7 +37,7 @@ python write_csv.py
 ```
 
 ### Evaluation
-Conduct rejection and save the estimation error for the rest at different rejection rate.
+Reload the trained model from the local dir, conduct rejections and save the estimation error for the rest at different rejection rate.
 
 ```.sh
 bash evaluations_blogcatalog.sh
