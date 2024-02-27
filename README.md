@@ -19,6 +19,8 @@ IEEE ICDM'23 [To Predict or to Reject: Causal Effect Estimation with Uncertainty
 The following .yml is a direct output from the actual working environment by "conda env export > environment.yml
 ". I retested the installation without any problem on the Ubuntu 22.04 LTS with 12th Gen Intel® Core™ i7-12700K and RTX3090. If there is any issue regarding the installation, please raise a question via Issues
 ```.sh
+$ git clone https://github.com/uqhwen2/GraphDKL.git
+$ cd GraphDKL
 $ conda env create -f environment.yml
 $ conda activate graphdkl
 ```
