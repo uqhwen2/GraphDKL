@@ -15,6 +15,7 @@ class GraphSAGE(nn.Module):
     def __init__(self, dim_in, dim_h, dim_out):
         super().__init__()
         # SN_SAGEConv implement the spectral normalization (SN), while SAEGConv is the one without SN.
+        # Swith to SAGEConv if you do not want SN
         self.sage1 = SN_SAGEConv(dim_in, dim_h, aggr='max', normalize=True)
         self.sage2 = SN_SAGEConv(dim_h, dim_h, aggr='max', normalize=True)  # Pay attention to the dim_out when connecting to GP
 
@@ -66,6 +67,7 @@ class GraphDKL(gpytorch.Module):  # Need to be changed to gpytorch.Module if GP 
         self.gp_0 = GPR_0(num_inducing, latent_dim)
 
         # Neural Net Decoder
+        #implement the spectral normalization, comment out the first two and uncomment the last two to swithc to no SN
         self.fc_y1_pred = nn.Sequential(
                                         spectral_norm(nn.Linear(100, 100)), nn.ReLU(),  # nn.Dropout(0.1),
                                         spectral_norm(nn.Linear(100, latent_dim)), nn.ReLU()
